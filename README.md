@@ -1,75 +1,76 @@
 ST.Petersburg paradox
 
-コインを表が出るまで投げ続け、投げた回数をNとすると、2^(N-1)円もらえるとするゲームにおいて、期待値を計算すると、無限大に発散してしまう。
+If you keep tossing coins until you get a face and the number of tosses is N,
 
-W=Σk=1,∞(1/2^k・2^(k-1))=∞
+In a game where you get 2^(N-1) yen, if you calculate the expected value,diverges to infinity.
 
-これは、直感と反するので、サンクトペテルスブルグのパラドックスと呼ばれる。
+W=Σk=1,∞(1/2^k/2^(k-1))=∞
 
-一旦、コインを投げる回数の期待値Sを求め、それから賞金の期待値（もどき）μを算出する方法(方法１)を取ってみる。…①
+This is called the St. Petersburg paradox because it goes against intuition.
+
+Once we find the expected value S of the number of coin tosses, then, let us take the method (Method 1) to calculate the expected value of the prize money (also called “μ”). ...①)
 
 S=Σk=1,∞ (1/2^k)=2
 
-S=2なので、μ=2^(S-1)=2
+Since S=2, μ=2^(S-1)=2
 
-故に、答えは２である。
+Hence, the answer is 2.
 
-と、いうのは誤っている。（よくある間違い）
+which is incorrect. (Common mistake)
 
-一般に、期待値において、f(g(x))=g(f(x))は成り立たないので、
+In general, since f(g(x))=g(f(x)) does not hold in the expected value,
 
-一旦、コインを投げる回数の期待値を求め、
+Once the expected value of the number of coin tosses is obtained, the expected value of the prize money (or something similar) is then obtained,
 
-それから賞金の期待値（もどき）を算出するのは誤っている。
+Then, it is incorrect to calculate the expected value of the prize (or something similar).
 
-しかし、これのどこが間違っているのかは解らない。
+However, I don't understand what is incorrect with this.
 
-意味論的には合ってるが、数学的には間違っている。
+Semantically correct, but mathematically incorrect.
 
-１回のゲームでもらえる金額は、2^nなので、ここに、間違いのポイントがある。
+The amount of money you get per game is 2^n, so here is the point of error.
 
-ウイリアム・フェラーも標本抽出で算出したが、期待値無限大が正解である。
+William Feller also calculated this by sampling, and the correct answer is an expected value of infinity.
 
-ゲームの回数が有限に限られるならば、期待値は遥かに小さな値に収束する
+If the number of games is limited to a finite number, then the expected value converges to a far smaller value.
 
-無限大の繰り込みができるかどうかは不明
+It is not clear if renormalization of infinity is possible.
 
-ダニエル・ベルヌーイはこのパラドックスを提示し、賞金の対数を取ることによって、効用という解を求めたが、賞金の金額が大きくなるほど１円の価値が小さくなるというのでは、人間の主観が入ってくるので、客観的な回答にはならない。
+Daniel Bernoulli presented this paradox and sought the solution of utility by taking the logarithm of the prize money, but it is not an objective answer because the larger the prize money, the smaller the value of a penny, because of human subjectivity.
 
-方法１とn回シミュレーションを繰り返した場合の平均値を求めるプログラムを載せる。
+Method 1 and a program to find the average value when the simulation is repeated n times are included.
 
-ここではn=10000とする
+Here we assume n=10000
 
 ```
-#!/usr/bin/python3
-
+#! /usr/bin/python3
 import os
 import binascii
 import random
 from getkey import getkey,keys
 
-#方法１
-# ∞＝１００００とした場合のSの近似値
+#Method 1
+# Approximate value of S when ∞ = 10000
 # S=Σk=1,10000 (1/2^k)
-#
+# method 1 # approximate value of S when ∞=10000
 s=0
-for i in range(10000):
+for i in range(10000):.
  s=s+1/2**i
-print("方法１:",2**(s-1))
+print(“Method 1:”,2**(s-1))
 
-print("Hit any key")
+print(“Hit any key”)
 key=getkey()
 
-# 10000回ゲームを繰り返した場合の平均の算出
+# Calculate the average of 10000 game repetitions
 N=10000
 l=[]
 r=[]
-f=open("/dev/random",'rb') # /dev/randomを開く
+f=open(“/dev/random”,'rb') # Open /dev/random
 
-# ｎ回シミュレーションをした場合の結果のリストを作る
-for i in range(N):
+# Make a list of results for n simulations
+for i in range(N): for i in range(N): for i in range(N)
  k=0
- while(True):
+ while(True): k
    k=k+1
    n=f.read(1)
    r1=binascii.hexlify(n)
@@ -78,101 +79,104 @@ for i in range(N):
  r+=[k]
  l+=[2**(k-1)]
 
-# 平均を取る
+# Take the average
 a=sum(l)/N
 b=sum(r)/N
 
-print("シミュレーション")
-print("回数：",r)
-print("利得額：",l)
-print("コインを投げる平均回数: ",b)
-print("μ(%d)=%f"%(N,2**(b-1)))
-print("平均利得額: ",a)
+print(“Simulation”)
+print(“Number of times:”,r)
+print(“Amount of gain:”,l)
+print("Average number of coin tosses: ”,b)
+print(“μ(%d)=%f”%(N,2**(b-1)))
+print("Average amount of gain: ”,a)
 ```
 
-プログラムの実行結果
+Result of program execution
 
 ```
 $ ev.py
-方法１:2.0
+Method 1:2.0
 Hit any key
-シミュレーション
-回数： [3, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 3, 2, 1, 2, 1, 1, 2, 1, 2, 2, 4, 3, 1, 3, 4, 5, 3, 1, 3, 3, 1, 1, 1, 1, 3, 1, 1, 1, 1, 2, 1, 1, 3, 1, 1, 3, 4, 1, 1, 5, 5, 4, 1, 1, 2, 5, 1, 1, 1, 1, 2, 1, 2, 1, 2, 3, 2, 3, 2, 2, 1, 2, 1, 1, 2, 3, 1, 1, 1, 3, 1, 10, ,長いので略,8, 1, 7, 1, 1, 1]
-利得額： [4.0, 1.0, 2.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 4.0, 2.0, 1.0, 2.0, 1.0, 1.0, 2.0, 1.0, 2.0, 2.0, 8.0, 4.0, 1.0, 4.0, 8.0, 16.0, 4.0, 1.0, 4.0, 4.0, 1.0, 1.0, 1.0, 1.0, 4.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0, 4.0, 1.0, 1.0, 4.0, 8.0, 1.0, 1.0, 16.0, 16.0, 8.0, 1.0, 1.0, 2.0, 16.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 4.0, 2.0, 4.0, 2.0, 2.0, 1.0, 2.0, 1.0, 1.0, 2.0, 4.0, 1.0, 1.0, 1.0, 4.0, 1.0, 512.0, 長いので略 , 128.0, 1.0, 64.0, 1.0, 1.0, 1.0]
-コインを投げる平均回数: 1.9905
+Simulation
+ 5, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 3, 2, 2, 3, 3, 2, 2, 1, 2, 1, 1, 2, 3, 1, 1, 1, 1, 3, 1, 10, ,long so abbreviated,8, 1, 7, 1, 1, 1]
+  16.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 2.0, 2.0, 1.0, 2.0, 2.0, 4.0, 2.0, 4.0, 4.0, 2.0, 1.0, 1.0, 1.0, 2.0, 1.0, 4.0, 4.0, 4.0, 1.0, 1.0, 4.0, 1.0, 512.0, omitted because long , 128.0, 1.0, 64. 0, 1.0, 1.0, 1.0, 1.0]
+Average number of coin tosses: 1.9905
 μ(10000)=1.974132271
-平均利得額: 6.5987
+Average gain: 6.5987
 $ 
 ```
 
-ここで、10000回シミュレーションをしたとき、コインを投げる平均回数は1.9905になっているので、
+Here, when the simulation is run 10000 times,
 
-μ（10000回のシミュレーションにおいて）＝2^(1.9905-1)≒1.974132271で、平均利得額6.5987とは大きな開きがある。
+Since the average number of coin tosses is 1.9905,
 
-rの平均：(r[0]+r[1]+r[2]+r[3]+r[4]+...+r[9999])/10000=1.9905
+μ (in 10000 simulations) = 2^(1.9905-1) ≈ 1.974132271 with,
 
-rの平均は、(r1+r2+r2+...+rn)/nで表される。
+This is a large difference from the average gain of 6.5987.
 
-回数rが全て2ならば、（∑(i=1,n){2^(2-1)})n=(∑(i=1,n）{2})n=2である。
+Average of r: (r[0]+r[1]+r[2]+r[3]+r[4]+... +r[9999])/10000=1.9905
 
-lの平均la=(l[0]+l[1]+l[2]+...+l[9999])/10000=6.5987　//シミュレーション
+The average of r is (r1+r2+r2+... +rn)/n.
 
-=（∑(i=1,n){l[i]}）/n=（∑(i=1,n){2^(r[i]-1)}）/nとする。
+If the number of times r is all 2, then (∑(i=1,n){2^(2-1)})n=(∑(i=1,n){2})n=2.
 
-極限において、①の、l=μ、r=Ｓとすると、l=2^(r-1)である。
+The average of l, la=(l[0]+l[1]+l[2]+... +l[9999])/10000=6.5987 = (∑(i=1,n){l[i]})/n=(∑(i=1,n){2^(r[i]-1)})/n.
 
-コンピュータ・シミュレーションによる解
+In the limit, in (1), if l=μ and r=S, then l=2^(r-1).
 
-10億回のゲームのシミュレーションを行った解をここに載せる。
+Solution by computer simulation
 
-プログラム
+The solutions obtained by simulating the game one billion times are shown here.
+
+The program
 
 ```
-#!/usr/bin/python3
+ev.py
+#! /usr/bin/python3
 import os
 import binascii
 import random
 from getkey import getkey,keys
 
 N=1000000000
-# N回ゲームを繰り返した場合の平均の算出
+# Calculate the average of N game iterations
 l=0
 r=0
 
-f=open("/dev/random",'rb') # /dev/randomを開く
+f=open(“/dev/random”,'rb') # Open /dev/random
 
-# ｎ回シミュレーションをした場合の結果のリストを作る
+# Make a list of results for n simulations
 
-for i in range(N):
+for i in range(N): for i in range(N): for i in range(N)
  k=0
- while(True):
+ while(True): k
    k=k+1
    n=f.read(1)
-   r1=binascii.hexlify(n) #１６進の文字列に変換
-   r2=int(r1,16) # 整数に変換
-   if r2%2:
+   r1=binascii.hexlify(n) # convert to hexadecimal string
+   r2=int(r1,16) # convert to integer
+   if r2%2: break
      break
  print(i,chr(13),end='',flush=True)
  r+=k
  l+=2**(k-1)
 
-f.close() # /dev/randomを閉じる
+f.close() # close /dev/random
 
-# 平均を取る
+# Take the average
 a=l/N
 b=r/N
 
-print("シミュレーション回数：",N)
-print("コインを投げる平均回数: ",b)
-print("平均利得額: ",a)
+print("Number of simulations: ”,N)
+print("Average number of coin tosses: ”,b)
+print("Average amount of gain: ”,a)
 ```
 
-実行結果
+Execution Result
 
 ```
-シミュレーション回数： 1000000000
-コインを投げる平均回数:  2.000005233
-
+Number of simulations: 1000000000
+Average number of coin tosses: 2.000005233
+Average gain: 19.908359876
 ```
-
-平均利得額:  19.908359876
+love.
+Translated with DeepL.com (free version)
