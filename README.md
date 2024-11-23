@@ -170,6 +170,7 @@ Average payoff: 19.908359876
 
 So, "realistically" the expected value is at best 20 yen. It's better not to take this gamble.
 
-We are waiting for the appearance of Ezekiel Bernoulli, who will solve this problem by renormalizing the expected value.
+We are waiting for the appearance of Ezekiel Bernoulli, who will solve this problem by renormalizing the expected value　with the mathematical new theory.
 
-If the simulation is terminated after N times, the average payoff H(N) will be a function of N that includes probabilistic unknowns. In the end, if it is done infinitely, lim N→∞ H(N)＝∞.
+If the simulation is terminated after N times, the average payoff H(N) will be a function of N that includes probabilistic unknowns. 
+In the end, if it is done infinitely, lim N→∞ H(N)＝∞.
