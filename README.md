@@ -1,6 +1,5 @@
 ST.Petersburg paradox
 
-I only play the game once.
 
 In a game where you keep flipping a coin until it lands on heads, and N is the number of flips, you get 2^(N-1) yen. If you calculate the expected value, it diverges to infinity.
 
@@ -18,7 +17,9 @@ Since S=2, μ=2^(S-1)=2
 
 Therefore, the answer is 2.
 
-This is true in a sense. However, the "expected amount" is not the "expected value of the amount."
+This is true in a sense, when the player only play one game.
+
+However, the "expected amount" is not the "expected value of the amount."
 
 In general, f(g(x))=g(f(x)) does not hold true for expected value.
 
