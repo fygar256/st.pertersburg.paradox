@@ -172,5 +172,7 @@ So, "realistically" the expected value is at best 20 yen. It's better not to tak
 
 We are waiting for the appearance of Ezekiel Bernoulli, who will solve this problem by renormalizing the expected value　with the mathematical new theory.
 
+One of the reasons this problem cannot be solved is that information disappears when calculations are performed.
+
 If the simulation is terminated after N times, the average payoff H(N) will be a function of N that includes probabilistic unknowns. 
 In the end, if it is done infinitely, lim N→∞ H(N)＝∞.
