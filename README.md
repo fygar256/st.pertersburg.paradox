@@ -36,7 +36,7 @@ Below is a program to calculate the average value when Method 1 and the simulati
 
 Here, n=10000.
 
-````ev0.py
+```ev0.py
 #!/usr/bin/python3
 import os
 import binascii
