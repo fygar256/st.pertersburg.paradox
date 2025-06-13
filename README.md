@@ -22,17 +22,17 @@ Since S=2, μ=2^(S-1)=2
 
 Therefore, the answer is 2.
 
-This is a semantically valid inference, but mathematically incorrect, because the number of coin tosses in one game can diverge to infinity.
+This is a semantically valid inference, but mathematically incorrect, because the number of coin tosses in one game can be infinite.
 
 In general, f(g(x))=g(f(x)) does not hold for the expected value.
 
-William Feller also calculated this by sampling, but the correct answer is that the expected value is infinite.
+William Feller also calculated this by sampling, and the correct answer is that the expected value is infinite.
 
 If the number of games is finite, the expected value converges to a much smaller value.
 
-Daniel Bernoulli presented this paradox and found a solution in the form of utility by taking the logarithm of the prize money, but saying that the value of money decreases as the prize money increases introduces human subjectivity and is not an objective answer.
+Daniel Bernoulli presented this paradox and found a solution in the form of utility by taking the logarithm of the prize money, but saying that the value of money decreases as the prize money increases introduces human subjectivity, so it is not an objective answer.
 
-Below is a program that calculates the average value when Method 1 and the simulation are repeated n times.
+Below is a program to calculate the average value when Method 1 and the simulation are repeated n times.
 
 Here, n=10000.
 
